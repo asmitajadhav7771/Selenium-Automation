@@ -1,0 +1,64 @@
+package Actionclass;
+
+	import java.util.List;
+	import java.util.Random;
+
+	import org.openqa.selenium.By;
+	import org.openqa.selenium.WebElement;
+	import org.openqa.selenium.chrome.ChromeDriver;
+	import org.openqa.selenium.interactions.Actions;
+
+	public class Try {
+	    public static void main(String[] args) throws InterruptedException {
+
+	        ChromeDriver driver = new ChromeDriver();
+	        driver.manage().window().maximize();
+	        driver.get("https://demo.automationtesting.in/Dynamic.html");
+	        Thread.sleep(2000);
+
+	        Actions act = new Actions(driver);
+
+	        // 3 source symbols
+	        WebElement angular = driver.findElement(By.id("angular"));
+	        WebElement mongo = driver.findElement(By.id("mongo"));
+	        WebElement selenium = driver.findElement(By.id("node"));
+
+	        // 9 boxes
+	        List<WebElement> boxes =
+	                driver.findElements(By.xpath("//div[@id='droparea']/div"));
+
+	        System.out.println("Total Boxes = " + boxes.size());
+
+	        Random r = new Random();
+
+	        int countS = 0;
+	        int countAT = 0;
+	        int countSe = 0;
+
+	        // 9 boxes fill kara
+	        for (int i = 0; i < boxes.size(); i++) {
+
+	            int n = r.nextInt(3); // 0,1,2
+
+	            if (n == 0) {
+	                act.dragAndDrop(angular, boxes.get(i)).perform();
+	                countS++;
+	            }
+	            else if (n == 1) {
+	                act.dragAndDrop(mongo, boxes.get(i)).perform();
+	                countAT++;
+	            }
+	            else {
+	                act.dragAndDrop(selenium, boxes.get(i)).perform();
+	                countSe++;
+	            }
+
+	            Thread.sleep(500);
+	        }
+
+	        System.out.println("Selenium (S) = " + countS);
+	        System.out.println("ToolsQA (AT) = " + countAT);
+	        System.out.println("Selenium Webdriver (Se) = " + countSe);
+	    }
+	}
+
